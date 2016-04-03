@@ -1,7 +1,7 @@
 #ifndef _EVENT_HANDLER_H_
 #define _EVENT_HANDLER_H_
 
-#include "EventRobot.h"
+#include "../event_robot_types.h"
 
 class EventHandler{
     public:

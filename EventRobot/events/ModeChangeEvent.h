@@ -1,7 +1,7 @@
 #ifndef _MODE_CHANGE_EVENT_H_
 #define _MODE_CHANGE_EVENT_H_
-#include "events/EventBase.h"
-#include "EventRobot.h"
+#include "EventBase.h"
+#include "../EventRobot.h"
 
 class ModeChangeEvent: public EventBase{
     public:

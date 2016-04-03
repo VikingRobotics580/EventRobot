@@ -1,8 +1,8 @@
 #ifndef _TICK_EVENT_H_
 #define _TICK_EVENT_H_
 
-#include "events/EventBase.h"
-#include "EventRobot.h"
+#include "EventBase.h"
+#include "../EventRobot.h"
 
 class TickEvent: public EventBase {
     public:

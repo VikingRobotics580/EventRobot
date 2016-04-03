@@ -1,4 +1,4 @@
-#include "events/ModeChangeEvent.h"
+#include "ModeChangeEvent.h"
 
 ModeChangeEvent::ModeChangeEvent(Modes old, Modes now):
     EventBase(),

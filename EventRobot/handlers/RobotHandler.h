@@ -1,8 +1,8 @@
 #ifndef _ROBOT_HANDLER_H_
 #define _ROBOT_HANDLER_H_
 
-#include "handlers/EventHandler.h"
-#include "EventRobot.h"
+#include "EventHandler.h"
+#include "../EventRobot.h"
 
 class RobotHandler: public EventHandler {
     public:
