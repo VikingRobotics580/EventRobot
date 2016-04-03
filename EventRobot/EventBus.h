@@ -3,8 +3,7 @@
 
 #include <vector>
 #include "events/EventBase.h"
-
-typedef std::vector<EventBase*> event_list;
+#include "event_robot_types.h"
 
 class EventBus {
     public:
