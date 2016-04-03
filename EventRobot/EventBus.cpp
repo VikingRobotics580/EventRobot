@@ -2,22 +2,22 @@
 #include "events/EventBase.h"
 
 EventBus::EventBus():
-    event_list()
+    m_event_list()
 {
 }
 
 EventBus::~EventBus(){
-    for(int i=0; i<event_list.size(); i++)
-        delete event_list.at(i);
+    for(std::size_t i=0; i<m_event_list.size(); i++)
+        delete m_event_list.at(i);
 }
 
 void EventBus::post(EventBase* event){
-    event_list.push_back(event);
+    m_event_list.push_back(event);
 }
 
 void EventBus::Update(){
-    for(int i=0; i<event_list.size(); i++){
-        EventBase* event = event_list.at(i);
+    for(std::size_t i=0; i<m_event_list.size(); i++){
+        EventBase* event = m_event_list.at(i);
 
         // Increase the lifecycle time of the event
         event->lifecycle++;
@@ -26,7 +26,7 @@ void EventBus::Update(){
         if(event->lifecycle > EventBus::MAX_LIFECYCLE_TIME)
             event->setCanceled(true);
         if(event->isCanceled()){
-            delete event_list.remove(i);
+            delete *m_event_list.erase(m_event_list.begin()+i);
         }
     }
 }
