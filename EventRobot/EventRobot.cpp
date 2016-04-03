@@ -1,21 +1,20 @@
-
+#include "events/EventBase.h"
+#include "events/TickEvent.h"
 #include "EventRobot.h"
-#include "handlers/RobotHandler.h"
 
-EventRobot::EVENT_BUS = new EventBus();
-EventRobot::instance = NULL;
+EventBus* const EventRobot::EVENT_BUS = new EventBus();
 
 EventRobot::EventRobot():
-    BaseRobot(),
-    handlers(),
+    RobotBase(),
+    m_handlers(),
     m_mode()
 {
     registerHandler(new RobotHandler());
 }
 
 EventRobot::~EventRobot(){
-    for(int i=0; i<handlers.size(); i++){
-        delete handlers.at(i);
+    for(size_t i=0; i<m_handlers.size(); i++){
+        delete m_handlers.at(i);
     }
 
     delete EVENT_BUS;
@@ -23,7 +22,7 @@ EventRobot::~EventRobot(){
 
 void EventRobot::registerHandler(EventHandler* handler){
     // TODO: Make each handler get inserted at the start of the list, so that RobotHandler is called last
-    handlers.push_back(handler);
+    m_handlers.push_back(handler);
 }
 
 void EventRobot::StartCompetition(){
@@ -46,11 +45,5 @@ void EventRobot::checkForModeChange(){
         else
             m_mode = Modes::NONE;
     }
-}
-
-EventRobot* EventRobot::getInstance(){
-    if(instance == NULL)
-        instnace = new EventRobot();
-    return instance;
 }
 

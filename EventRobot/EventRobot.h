@@ -5,7 +5,7 @@
 #include "WPILib.h"
 #include "EventBus.h"
 #include "handlers/EventHandler.h"
-#include "events/EventBase.h"
+#include "handlers/RobotHandler.h"
 
 enum class Modes {
     ENABLED,
@@ -22,15 +22,13 @@ class EventRobot: public RobotBase{
         ~EventRobot();
         void registerHandler(EventHandler*);
         void checkForModeChange();
-        static EventRobot* getInstance();
-        const static EventBus* EVENT_BUS;
+        static EventBus* const EVENT_BUS;
 
         inline Modes getMode(){ return m_mode; };
     protected:
         void StartCompetition() override;
     private:
-        static EventRobot* instance;
-        std::vector<EventHandler*> handlers;
+        std::vector<EventHandler*> m_handlers;
 
         Modes m_mode;
 };
