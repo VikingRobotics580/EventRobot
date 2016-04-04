@@ -16,7 +16,7 @@
 AT = @
 INCDIR = -I$(HOME)/wpilib/cpp/current/include -I$(HOME)/Desktop/dev/C++/EventRobot/EventRobot
 CPPFLAGS += -g -Wall -W $(INCDIR) -std=c++14 -fPIC
-LFLAGS = -L$(HOME)/wpilib/cpp/current/lib -lwpi #-L$(HOME)/Desktop/dev/C++/EventRobot/EventRobot
+LFLAGS = -L$(HOME)/wpilib/cpp/current/lib -L$(HOME)/Desktop/dev/C++/EventRobot/EventRobot/libs -lwpi 
 CXX = arm-frc-linux-gnueabi-g++
 TEAM = 580
 RMCOMMAND = rm -f
