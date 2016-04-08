@@ -1,5 +1,5 @@
-#include "EventBus.h"
-#include "events/EventBase.h"
+#include "includes/EventBus.h"
+#include "includes/events/EventBase.h"
 
 EventBus::EventBus():
     m_event_list()

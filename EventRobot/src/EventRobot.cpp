@@ -1,6 +1,6 @@
-#include "events/EventBase.h"
-#include "events/TickEvent.h"
-#include "EventRobot.h"
+#include "includes/events/EventBase.h"
+#include "includes/events/TickEvent.h"
+#include "includes/EventRobot.h"
 
 EventBus* const EventRobot::EVENT_BUS = new EventBus();
 
