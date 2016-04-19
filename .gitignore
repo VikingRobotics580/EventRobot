@@ -1,4 +1,7 @@
-*.out
-*.o
+libs/
+bin/
+*.swp
 *~*
+*.o
+*.out
 
