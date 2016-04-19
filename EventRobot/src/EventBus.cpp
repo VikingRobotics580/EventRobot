@@ -24,8 +24,8 @@ void EventBus::Update(){
 
         // Automatically cancel the event if it is past the maximum allowed time for it to be alive
         if(event->lifecycle > EventBus::MAX_LIFECYCLE_TIME)
-            event->setCanceled(true);
-        if(event->isCanceled()){
+            event->canceled = true;
+        if(event->canceled){
             delete *m_event_list.erase(m_event_list.begin()+i);
         }
     }
