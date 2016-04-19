@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include "events/TickEvent.h"
-#include "events/ModeChangeEvent.h"
 #include "UpdateHandler.h"
 
 UpdateHandler::UpdateHandler():

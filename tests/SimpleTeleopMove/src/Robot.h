@@ -1,5 +1,5 @@
 #include "WPILib.h"
-#include "EventRobot.h"
+#include "Event.h"
 
 /*
  * A simple Robot program that moves a tank-drive robot in Teleop with 2 joysticks

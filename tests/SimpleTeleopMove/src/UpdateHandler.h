@@ -1,7 +1,7 @@
 #ifndef _UPDATE_HANDLER_H_
 #define _UPDATE_HANDLER_H_
 #include "WPILib.h"
-#include "handlers/EventHandler.h"
+#include "Event.h"
 
 class UpdateHandler: public EventHandler {
     public:
