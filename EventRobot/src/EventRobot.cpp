@@ -1,3 +1,4 @@
+#include "WPILib.h"
 #include "includes/events/EventBase.h"
 #include "includes/events/TickEvent.h"
 #include "includes/EventRobot.h"
