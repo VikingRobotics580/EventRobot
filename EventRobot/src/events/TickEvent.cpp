@@ -1,4 +1,4 @@
-#include "TickEvent.h"
+#include "includes/events/TickEvent.h"
 
 TickEvent::num_ticks = 0;
 
