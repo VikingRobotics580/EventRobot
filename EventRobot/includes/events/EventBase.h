@@ -4,8 +4,7 @@
 typedef struct struct_EventBase {
         int eid;
         int lifecycle;
-
-        bool m_canceled;
+        bool canceled;
 } EventBase;
 
 #endif
