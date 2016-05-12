@@ -1,6 +1,14 @@
+#include <iostream>
+
 #include "WPILib.h"
+#include "HAL/HAL.hpp"
+#include "SmartDashboard/SmartDashboard.h"
+#include "LiveWindow/LiveWindow.h"
+
 #include "includes/events/EventBase.h"
 #include "includes/events/TickEvent.h"
+#include "includes/events/RobotInitializationEvent.h"
+#include "includes/events/EventHandlerErrorEvent.h"
 #include "includes/EventRobot.h"
 
 EventBus* const EventRobot::EVENT_BUS = new EventBus();
@@ -27,10 +35,26 @@ void EventRobot::registerHandler(EventHandler* handler){
 }
 
 void EventRobot::StartCompetition(){
-    EVENT_BUS->post(new TickEvent(this));
-    for(auto& handler : m_handlers)
-        handler->Update(EVENT_BUS->getEvents());
-    EVENT_BUS->Update();
+    HALReport(HALUsageReporting::kResourceType_Framework,HALUsageReporting::kFramework_Iterative);
+    LiveWindow *lw = LiveWindow::GetInstance();
+    // TODO: Find out why this throws an undefined reference linker error
+    //SmartDashboard::init();
+    NetworkTable::GetTable("LiveWindow")->GetSubTable("~STATUS~")->PutBoolean("LW Enabled",false);
+    EVENT_BUS->post(new RobotInitializationEvent());
+
+    HALNetworkCommunicationObserveUserProgramStarting();
+    lw->SetEnabled(false);
+
+    while(true){
+        EVENT_BUS->post(new TickEvent(this));
+        for(auto& handler : m_handlers){
+            if(handler->Update(EVENT_BUS->getEvents())){
+                EVENT_BUS->post(new EventHandlerErrorEvent());
+            }
+        }
+        EVENT_BUS->Update();
+        m_ds.WaitForData();
+    }
 }
 
 void EventRobot::checkForModeChange(){
