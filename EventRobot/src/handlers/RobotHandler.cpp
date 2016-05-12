@@ -1,3 +1,6 @@
+#include "WPILib.h"
+#include "HAL/HAL.hpp"
+
 #include "includes/handlers/RobotHandler.h"
 #include "includes/events/TickEvent.h"
 #include "includes/events/ModeChangeEvent.h"
@@ -21,6 +24,19 @@ int RobotHandler::Update(event_list& events){
             // A mode change has occurred!
             if(mode != newMode){
                 EventRobot::EVENT_BUS->post(new PreModeChangeEvent(mode,newMode));
+            }
+
+            if(newMode == Modes::DISABLED){
+                HALNetworkCommunicationObserveUserProgramDisabled();
+            }else if(newMode == Modes::AUTONOMOUS){
+                HALNetworkCommunicationObserveUserProgramAutonomous();
+            }else if(newMode == Modes::TEST){
+                HALNetworkCommunicationObserveUserProgramTest();
+            }else if(newMode == Modes::NONE){
+                // Skip the rest if the current mode is invalid.
+                return 1;
+            }else{
+                HALNetworkCommunicationObserveUserProgramTeleop();
             }
 
         // PreModeChange -> ModeChange -> PostModeChange
