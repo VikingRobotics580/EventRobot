@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <iostream>
+#include <typeinfo>
 #include "UpdateHandler.h"
 
 UpdateHandler::UpdateHandler():
@@ -12,6 +14,7 @@ UpdateHandler::UpdateHandler():
     m_drive = new RobotDrive(motor1,motor2,motor3,motor4);
     stick1 = new Joystick(0);
     stick2 = new Joystick(1);
+    m_drive->SetSafetyEnabled(false);
 }
 
 UpdateHandler::~UpdateHandler(){
@@ -29,6 +32,10 @@ UpdateHandler::~UpdateHandler(){
 int UpdateHandler::Update(event_list& events){
     int ret = 0;
     for(auto& event : events){
+        std::cout << typeid(event).name() << std::endl;
+        std::cout << event->eid << std::endl;
+        std::cout << ModeChangeEvent::ID << std::endl;
+        std::cout << TickEvent::ID << std::endl;
         if(event->eid == ModeChangeEvent::ID){
             if(((ModeChangeEvent*)event)->nextMode == Modes::OPERATOR){
                 ret |= onTeleopInit();
@@ -48,6 +55,7 @@ int UpdateHandler::onTeleopInit(){
 }
 
 int UpdateHandler::onTeleopPeriodic(){
+    std::cout << "onTeleopPeriodic()" << std::endl;
     m_drive->TankDrive(stick1->GetX(), stick2->GetX());
     return 0;
 }
