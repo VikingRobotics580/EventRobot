@@ -26,7 +26,7 @@ void EventBus::Update(){
         if(event->lifecycle > EventBus::MAX_LIFECYCLE_TIME)
             event->canceled = true;
         if(event->canceled){
-            delete *m_event_list.erase(m_event_list.begin()+i);
+            m_event_list.erase(m_event_list.begin()+i);
         }
     }
 }
