@@ -6,5 +6,6 @@ TickEvent::TickEvent(EventRobot* caller):
     EventBase()
 {
     this->caller = caller;
+    eid = ID;
 }
 
