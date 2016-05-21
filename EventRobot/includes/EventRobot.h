@@ -1,6 +1,7 @@
 #ifndef _EVENT_ROBOT_H_
 #define _EVENT_ROBOT_H_
 
+#include <map>
 #include <vector>
 #include "WPILib.h"
 #include "EventBus.h"
@@ -16,11 +17,19 @@ enum class Modes {
     NONE
 };
 
+enum class HandlerPriority {
+    HIGHEST=0,
+    HIGH,
+    NORMAL,
+    LOW,
+    LOWEST
+};
+
 class EventRobot: public RobotBase{
     public:
         EventRobot();
         ~EventRobot();
-        void registerHandler(EventHandler*);
+        void registerHandler(EventHandler*,HandlerPriority);
         void checkForModeChange();
         static EventBus* const EVENT_BUS;
 
@@ -28,7 +37,7 @@ class EventRobot: public RobotBase{
     protected:
         void StartCompetition() override;
     private:
-        std::vector<EventHandler*> m_handlers;
+        std::map<HandlerPriority,std::vector<EventHandler*> > m_handlers;
 
         Modes m_mode;
 };

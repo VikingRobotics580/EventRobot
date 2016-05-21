@@ -9,6 +9,7 @@
 #include "includes/events/TickEvent.h"
 #include "includes/events/RobotInitializationEvent.h"
 #include "includes/events/EventHandlerErrorEvent.h"
+#include "includes/event_robot_types.h"
 #include "includes/EventRobot.h"
 
 EventBus* const EventRobot::EVENT_BUS = new EventBus();
@@ -18,20 +19,32 @@ EventRobot::EventRobot():
     m_handlers(),
     m_mode()
 {
-    registerHandler(new RobotHandler());
+    registerHandler(new RobotHandler(),HandlerPriority::LOWEST);
 }
 
 EventRobot::~EventRobot(){
-    for(size_t i=0; i<m_handlers.size(); i++){
-        delete m_handlers.at(i);
+    for(handlermap::iterator it=m_handlers.begin(); it != m_handlers.end(); ++it){
+        std::vector<EventHandler*> list = it->second;
+        for(size_t i=0; i < list.size(); i++){
+            delete list.at(i);
+        }
     }
 
     delete EVENT_BUS;
 }
 
-void EventRobot::registerHandler(EventHandler* handler){
-    // TODO: Make each handler get inserted at the start of the list, so that RobotHandler is called last
-    m_handlers.push_back(handler);
+/*
+ * registerHandler
+ * Accepts an EventHandler* and an optional HandlerPriority
+ *   If priority is not specified, then HandlerPriority::NORMAL is assumed
+ * Returns nothing
+ * Registers a handler with this EventRobot instance. The priority parameter specifies which order to execute each handler.
+ *  HIGHEST priority executes first, while LOWEST priority executes last
+ */
+void EventRobot::registerHandler(EventHandler* handler,HandlerPriority priority=HandlerPriority::NORMAL){
+    if(m_handlers.find(priority) != m_handlers.end())
+        m_handlers[priority] = std::vector<EventHandler*>();
+    m_handlers.at(priority).push_back(handler);
 }
 
 void EventRobot::StartCompetition(){
@@ -47,9 +60,11 @@ void EventRobot::StartCompetition(){
 
     while(true){
         EVENT_BUS->post(new TickEvent(this));
-        for(auto& handler : m_handlers){
-            if(handler->Update(EVENT_BUS->getEvents())){
-                EVENT_BUS->post(new EventHandlerErrorEvent());
+        for(handlermap::iterator it=m_handlers.begin(); it != m_handlers.end(); ++it){
+            for(auto& handler : it->second){
+                if(handler->Update(EVENT_BUS->getEvents())){
+                    EVENT_BUS->post(new EventHandlerErrorEvent());
+                }
             }
         }
         EVENT_BUS->Update();
