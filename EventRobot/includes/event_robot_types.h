@@ -6,5 +6,14 @@
 
 typedef std::vector<EventBase*> event_list;
 
+// Priority of the handled event
+enum class Priorities {
+    HIGHEST=0,
+    HIGH,
+    NORMAL,
+    LOW,
+    LOWEST
+};
+
 #endif
 
