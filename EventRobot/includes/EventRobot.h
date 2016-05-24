@@ -31,6 +31,12 @@ class EventRobot: public RobotBase{
         std::vector<EventHandler*> m_handlers;
 
         Modes m_mode;
+
+        // A simple method to wrap around the call, so that we can get the template thing
+        template<typename T>
+        void doHandleEvent(EventHandler* handler, T event){
+            handler->__handle_event<T>(event);
+        }
 };
 
 #endif
