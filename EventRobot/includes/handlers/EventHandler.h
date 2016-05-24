@@ -20,6 +20,14 @@ class EventHandler: public IHandler{
         EventHandler();
         virtual ~EventHandler();
         virtual int Update(event_list&)=0;
+
+        // A method to be overriden later by subclasses
+        template<typename T>
+        void __handle_event(){};
+        /*
+    private:
+        std::map< Priorities, std::vector<void(EventBase)> > _functions;
+        */
 };
 
 #endif
