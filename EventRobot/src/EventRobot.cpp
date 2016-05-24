@@ -47,9 +47,9 @@ void EventRobot::StartCompetition(){
 
     while(true){
         EVENT_BUS->post(new TickEvent(this));
-        for(auto& handler : m_handlers){
-            if(handler->Update(EVENT_BUS->getEvents())){
-                EVENT_BUS->post(new EventHandlerErrorEvent());
+        for(auto& event : EVENT_BUS->getEvents()){
+            for(auto& handler : m_handlers){
+                this->doHandleEvent(handler,event);
             }
         }
         EVENT_BUS->Update();
