@@ -10,7 +10,11 @@ class EventBus {
         EventBus();
         ~EventBus();
 
-        void post(EventBase*);
+        // template<typename T>
+        void post(IEventBase/*<T>*/* event);/*{
+            m_event_list.push_back(event);
+        };
+        */
         void Update();
 
         inline event_list& getEvents(){ return m_event_list; };
