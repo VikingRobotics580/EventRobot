@@ -1,6 +1,9 @@
 #ifndef _ROBOT_HANDLER_H_
 #define _ROBOT_HANDLER_H_
 
+#include "WPILib.h"
+#include "HAL/HAL.hpp"
+
 #include "EventHandler.h"
 #include "../events/TickEvent.h"
 #include "../events/ModeChangeEvent.h"
@@ -12,7 +15,6 @@ class RobotHandler: public EventHandler<RobotHandler> {
     public:
         RobotHandler();
         ~RobotHandler();
-        int Update(event_list& events);
 
         EVENT_SUBSCRIBE(TickEvent,LOW,onTick)
         int onTick(TickEvent* e){
@@ -23,7 +25,7 @@ class RobotHandler: public EventHandler<RobotHandler> {
             Modes newMode = caller->getMode();
 
             if(mode != newMode){
-                EventRobot::EVENT_BUS->post(new PreModeChange(mode,newMode));
+                EventRobot::EVENT_BUS->post(new PreModeChangeEvent(mode,newMode));
             }
 
             if(newMode == Modes::DISABLED){
