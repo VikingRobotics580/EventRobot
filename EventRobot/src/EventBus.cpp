@@ -11,13 +11,15 @@ EventBus::~EventBus(){
         delete m_event_list.at(i);
 }
 
+/*
 void EventBus::post(EventBase* event){
     m_event_list.push_back(event);
 }
+*/
 
 void EventBus::Update(){
     for(std::size_t i=0; i<m_event_list.size(); i++){
-        EventBase* event = m_event_list.at(i);
+        EventBase* event = static_cast<EventBase*>(m_event_list.at(i));
 
         // Increase the lifecycle time of the event
         event->lifecycle++;
