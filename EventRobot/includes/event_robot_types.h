@@ -4,7 +4,7 @@
 #include <vector>
 #include "includes/events/EventBase.h"
 
-typedef std::vector<EventBase*> event_list;
+typedef std::vector<IEventBase*> event_list;
 
 // Priority of the handled event
 enum class Priorities {
@@ -13,6 +13,15 @@ enum class Priorities {
     NORMAL,
     LOW,
     LOWEST
+};
+
+enum class Modes {
+    ENABLED,
+    DISABLED,
+    OPERATOR,
+    AUTONOMOUS,
+    TEST,
+    NONE
 };
 
 #endif
