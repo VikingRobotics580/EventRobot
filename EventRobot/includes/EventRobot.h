@@ -5,8 +5,9 @@
 #include "WPILib.h"
 #include "EventBus.h"
 #include "handlers/EventHandler.h"
-#include "handlers/RobotHandler.h"
+#include "event_robot_types.h"
 
+/*
 enum class Modes {
     ENABLED,
     DISABLED,
@@ -15,12 +16,13 @@ enum class Modes {
     TEST,
     NONE
 };
+*/
 
 class EventRobot: public RobotBase{
     public:
         EventRobot();
         ~EventRobot();
-        void registerHandler(EventHandler*);
+        void registerHandler(IHandler*);
         void checkForModeChange();
         static EventBus* const EVENT_BUS;
 
@@ -28,15 +30,9 @@ class EventRobot: public RobotBase{
     protected:
         void StartCompetition() override;
     private:
-        std::vector<EventHandler*> m_handlers;
+        std::vector<IHandler*> m_handlers;
 
         Modes m_mode;
-
-        // A simple method to wrap around the call, so that we can get the template thing
-        template<typename T>
-        void doHandleEvent(EventHandler* handler, T event){
-            handler->__handle_event<T>(event);
-        }
 };
 
 #endif
