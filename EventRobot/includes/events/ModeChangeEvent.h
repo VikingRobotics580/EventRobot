@@ -3,7 +3,7 @@
 #include "EventBase.h"
 #include "../EventRobot.h"
 
-class ModeChangeEvent: public EventBase{
+class ModeChangeEvent: public EventBase<ModeChangeEvent>{
     public:
         ModeChangeEvent(Modes, Modes);
 
@@ -20,7 +20,7 @@ class PreModeChangeEvent: public ModeChangeEvent{
         const static int ID = 3;
 };
 
-class PostModeChangeEvent: public ModeChangeEvent {
+class PostModeChangeEvent: public ModeChangeEvent{
     public:
         PostModeChangeEvent(Modes, Modes);
         const static int ID = 4;

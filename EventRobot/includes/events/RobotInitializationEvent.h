@@ -3,7 +3,7 @@
 
 #include "EventBase.h"
 
-struct RobotInitializationEvent: public EventBase{
+struct RobotInitializationEvent: public EventBase<RobotInitializationEvent>{
     RobotInitializationEvent(){ eid = ID; };
     const static int ID = 5;
 };

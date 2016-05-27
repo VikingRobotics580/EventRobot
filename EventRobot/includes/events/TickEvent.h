@@ -4,7 +4,7 @@
 #include "EventBase.h"
 #include "../EventRobot.h"
 
-class TickEvent: public EventBase {
+class TickEvent: public EventBase<TickEvent> {
     public:
         TickEvent(EventRobot*);
         // As long an int as we can make
