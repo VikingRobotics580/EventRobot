@@ -19,7 +19,7 @@ void EventBus::post(EventBase* event){
 
 void EventBus::Update(){
     for(std::size_t i=0; i<m_event_list.size(); i++){
-        EventBase* event = static_cast<EventBase*>(m_event_list.at(i));
+        EventBase<void*>* event = static_cast<EventBase<void*>*>(m_event_list.at(i));
 
         // Increase the lifecycle time of the event
         event->lifecycle++;
