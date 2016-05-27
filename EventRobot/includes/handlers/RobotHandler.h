@@ -13,8 +13,10 @@
 
 class RobotHandler: public EventHandler<RobotHandler> {
     public:
-        RobotHandler();
-        ~RobotHandler();
+        RobotHandler():EventHandler(){};
+        ~RobotHandler(){};
+
+        int Update(event_list&){return 0;};
 
         EVENT_SUBSCRIBE(TickEvent,LOW,onTick)
         int onTick(TickEvent* e){
