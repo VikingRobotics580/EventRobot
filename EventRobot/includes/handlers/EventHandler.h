@@ -10,29 +10,29 @@
 // Unfortunately, because EventHandler is abstract, it cannot have a copy constructor because reasons
 struct IHandler{
     IHandler(){};
+    virtual ~IHandler(){}
     IHandler(const IHandler&){};
     IHandler& operator=(const IHandler&){
         return *this;
     };
+    virtual void __handle_event_HIGHEST(IEventBase*){};
+    virtual void __handle_event_HIGH(IEventBase*){};
+    virtual void __handle_event_NORMAL(IEventBase*){};
+    virtual void __handle_event_LOW(IEventBase*){};
+    virtual void __handle_event_LOWEST(IEventBase*){};
 };
 
 template<typename T>
 class EventHandler: public IHandler{
     public:
-        EventHandler();
-        virtual ~EventHandler();
+        EventHandler():IHandler(){};
+        virtual ~EventHandler(){};
         virtual int Update(event_list&)=0;
 
         // Get the real type of the object
         inline T* getActualType(){
             return static_cast<T*>(this);
         };
-
-        virtual void __handle_event_HIGHEST(IEventBase*){};
-        virtual void __handle_event_HIGH(IEventBase*){};
-        virtual void __handle_event_NORMAL(IEventBase*){};
-        virtual void __handle_event_LOW(IEventBase*){};
-        virtual void __handle_event_LOWEST(IEventBase*){};
 };
 
 #endif
