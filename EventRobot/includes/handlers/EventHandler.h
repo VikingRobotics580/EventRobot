@@ -1,6 +1,7 @@
 #ifndef _EVENT_HANDLER_H_
 #define _EVENT_HANDLER_H_
 
+#include "../events/EventBase.h"
 #include "../event_robot_types.h"
 
 // This is here so that we can fix that whole "missing copy constructor" issue
@@ -15,19 +16,23 @@ struct IHandler{
     };
 };
 
+template<typename T>
 class EventHandler: public IHandler{
     public:
         EventHandler();
         virtual ~EventHandler();
         virtual int Update(event_list&)=0;
 
-        // A method to be overriden later by subclasses
-        template<typename T>
-        void __handle_event(){};
-        /*
-    private:
-        std::map< Priorities, std::vector<void(EventBase)> > _functions;
-        */
+        // Get the real type of the object
+        inline T* getActualType(){
+            return static_cast<T*>(this);
+        };
+
+        virtual void __handle_event_HIGHEST(IEventBase*){};
+        virtual void __handle_event_HIGH(IEventBase*){};
+        virtual void __handle_event_NORMAL(IEventBase*){};
+        virtual void __handle_event_LOW(IEventBase*){};
+        virtual void __handle_event_LOWEST(IEventBase*){};
 };
 
 #endif
