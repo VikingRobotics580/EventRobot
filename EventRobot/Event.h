@@ -1,6 +1,7 @@
 #ifndef _EVENT_H_
 #define _EVENT_H_
 
+#include "includes/EventSubscribe.h"
 #include "includes/EventBus.h"
 #include "includes/EventRobot.h"
 #include "includes/event_robot_types.h"
