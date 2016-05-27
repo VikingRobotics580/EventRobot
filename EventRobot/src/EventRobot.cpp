@@ -9,6 +9,7 @@
 #include "includes/events/TickEvent.h"
 #include "includes/events/RobotInitializationEvent.h"
 #include "includes/events/EventHandlerErrorEvent.h"
+#include "includes/handlers/RobotHandler.h"
 #include "includes/EventRobot.h"
 
 EventBus* const EventRobot::EVENT_BUS = new EventBus();
@@ -29,7 +30,7 @@ EventRobot::~EventRobot(){
     delete EVENT_BUS;
 }
 
-void EventRobot::registerHandler(EventHandler* handler){
+void EventRobot::registerHandler(IHandler* handler){
     // TODO: Make each handler get inserted at the start of the list, so that RobotHandler is called last
     m_handlers.push_back(handler);
 }
@@ -49,7 +50,11 @@ void EventRobot::StartCompetition(){
         EVENT_BUS->post(new TickEvent(this));
         for(auto& event : EVENT_BUS->getEvents()){
             for(auto& handler : m_handlers){
-                this->doHandleEvent(handler,event);
+                static_cast<EventBase*>(handler)->getActualType()->__handle_event_HIGHEST(event->getActualType());
+                static_cast<EventBase*>(handler)->getActualType()->__handle_event_HIGH(event->getActualType());
+                static_cast<EventBase*>(handler)->getActualType()->__handle_event_NORMAL(event->getActualType());
+                static_cast<EventBase*>(handler)->getActualType()->__handle_event_LOW(event->getActualType());
+                static_cast<EventBase*>(handler)->getActualType()->__handle_event_LOWEST(event->getActualType());
             }
         }
         EVENT_BUS->Update();
