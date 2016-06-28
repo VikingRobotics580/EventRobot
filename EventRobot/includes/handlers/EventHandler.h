@@ -20,6 +20,7 @@ struct IHandler{
     virtual void __handle_event_NORMAL(IEventBase*){};
     virtual void __handle_event_LOW(IEventBase*){};
     virtual void __handle_event_LOWEST(IEventBase*){};
+    virtual void subscribe(IEventBase*){};
 };
 
 template<typename T>
@@ -33,6 +34,7 @@ class EventHandler: public IHandler{
         inline T* getActualType(){
             return static_cast<T*>(this);
         };
+
 };
 
 #endif
