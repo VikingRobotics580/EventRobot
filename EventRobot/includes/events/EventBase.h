@@ -1,7 +1,13 @@
 #ifndef _EVENT_BASE_H_
 #define _EVENT_BASE_H_
 
-struct IEventBase{};
+#include <typeinfo>
+//#include "includes/EventRobot.h"
+
+struct IEventBase{
+    // Here rather than in EventBase to satisfy the compiler
+    int priority;
+};
 
 template<typename T>
 struct EventBase: public IEventBase {
@@ -11,6 +17,11 @@ struct EventBase: public IEventBase {
 
         inline T* getActualType(){
             return static_cast<T*>(this);
+        }
+
+        static int getID(){
+            static const int id = reinterpret_cast<int>(typeid(T).name());
+            return id;
         }
 };
 
