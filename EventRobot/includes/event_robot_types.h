@@ -2,8 +2,8 @@
 #define _EVENT_ROBOT_TYPES_H_
 
 #include <vector>
-#include "includes/events/EventBase.h"
 
+struct IEventBase;
 typedef std::vector<IEventBase*> event_list;
 
 // Priority of the handled event
