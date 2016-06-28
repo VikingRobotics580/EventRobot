@@ -42,6 +42,7 @@ class RobotHandler: public EventHandler<RobotHandler> {
             }else{
                 HALNetworkCommunicationObserveUserProgramTeleop();
             }
+            return 0;
         }
 
         // PreModeChange -> ModeChange -> PostModeChange
@@ -62,6 +63,12 @@ class RobotHandler: public EventHandler<RobotHandler> {
                 EventRobot::EVENT_BUS->post(new PostModeChangeEvent(event->lastMode,event->nextMode));
             }
         }
+
+        SUBSCRIBE_START
+        SUBSCRIBE(ModeChangeEvent,0,onModeChange)
+        SUBSCRIBE(PreModeChangeEvent,0,onPreModeChange)
+        SUBSCRIBE(TickEvent,0,onTick)
+        SUBSCRIBE_END
 };
 
 #endif
