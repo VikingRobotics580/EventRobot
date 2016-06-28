@@ -50,11 +50,14 @@ void EventRobot::StartCompetition(){
         EVENT_BUS->post(new TickEvent(this));
         for(auto& event : EVENT_BUS->getEvents()){
             for(auto& handler : m_handlers){
+                handler->subscribe(event);
+                /*
                 handler->__handle_event_HIGHEST(event->getActualType());
                 handler->__handle_event_HIGH(event->getActualType());
                 handler->__handle_event_NORMAL(event->getActualType());
                 handler->__handle_event_LOW(event->getActualType());
                 handler->__handle_event_LOWEST(event->getActualType());
+                */
             }
         }
         EVENT_BUS->Update();
